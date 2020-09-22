@@ -25,7 +25,7 @@ namespace RagScraper
                 var NewLinks = GetMainPageLinks(url + $"?page={i + 1}");
                 MainPageLinks.AddRange(NewLinks);
 
-                drawTextProgressBar(i, maxPages);
+                drawTextProgressBar(i + 1, maxPages);
             }
             Console.WriteLine();
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(ArchivePath))
@@ -43,7 +43,7 @@ namespace RagScraper
         public List<MonsterInfo> GetMonsterPageInfo(List<string> urls)
         {
             var infos = new List<MonsterInfo>();
-            int count = 1;
+            int count = 0;
 
             Console.WriteLine("Gerando arquivo JSON.");
             foreach (var url in urls)
@@ -89,10 +89,10 @@ namespace RagScraper
 
                     monsterInfo.Url = url;
                     infos.Add(monsterInfo);
-                    drawTextProgressBar(count, urls.Count);
                     count++;
+                    drawTextProgressBar(count, urls.Count);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Console.WriteLine($"Erro ao acessar a url: {url}");
                 }
@@ -159,6 +159,4 @@ namespace RagScraper
             Console.Write(progress.ToString() + " of " + total.ToString() + "    "); //blanks at the end remove any excess
         }
     }
-
-
 }
